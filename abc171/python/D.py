@@ -1,18 +1,16 @@
-# TODO
-
-import numpy as np
-
-
 N = int(input())
-A = np.array([int(i) for i in input().split()])
+A = [int(i) for i in input().split()]
 Q = int(input())
-B, C = [], []
-for _ in range(Q):
-    b, c = map(int, input().split())
-    B.append(b)
-    C.append(c)
 
-for b, c in zip(B, C):
-    A = np.where(A==b, c, A)
-    print(A.sum())
+sum_A = sum(A)
+memo = [0] * 100001
+for a in A:
+    memo[a] += 1
+
+for _ in range(Q):
+    B, C = map(int, input().split())
+    sum_A += (C - B) * memo[B]
+    memo[C] += memo[B]
+    memo[B] = 0
+    print(sum_A)
 
